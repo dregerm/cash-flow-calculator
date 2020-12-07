@@ -1,10 +1,14 @@
-public class PaymentPlanItem
+
+namespace AndyCashflowAPI.Models
 {
-    public PaymentPlanItem(int months, long interest, long principal, long remaining)
+    public class PaymentPlanItem
     {
-        public const int month = months;
-        public const long interestPayment = interest;
-        public const long principalPayment = principal;
-        public const long remainingBalance = remaining;
+        public PaymentPlanItem(int months, long interest, long principal, long remaining){  
+            public const int month = months;
+            public const long interestPayment = interest;
+            public const long principalPayment = principal;
+            public const long remainingBalance = remaining;
+        }
     }
 }
+

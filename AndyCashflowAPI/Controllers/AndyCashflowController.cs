@@ -83,8 +83,7 @@ namespace AndyCashflowAPI.Controllers
         public async Task<ActionResult<LoanItem>> PostLoanItem(LoanItem loanItem)
         {
             
-            // loanItem.plan = loanPaymentPlanner(loanItem);
-
+            loanItem.plan = loanPaymentPlanner(loanItem);
             _context.LoanItems.Add(loanItem);
             await _context.SaveChangesAsync();
 
@@ -114,46 +113,41 @@ namespace AndyCashflowAPI.Controllers
 
        private PaymentPlanItem[] loanPaymentPlanner(LoanItem loanItem)
         {
-            long const monthsLeft = loanItem.MonthLeft;
+            const long monthsLeft = loanItem.MonthLeft;
             Console.WriteLine("MonthLeft: " + monthsLeft);
-            long const interestRate = loanItem.Rate;
-            long const originalBalance = loanItem.Balance;
+            const long interestRate = loanItem.Rate;
+            const long originalBalance = loanItem.Balance;
             long remainingBalance = originalBalance; 
-            long const totalMonthlyPayment = getTotalMonthlyPayment(originalBalance, interestRate, monthsLeft); // equal amount is paid every month
+            const long totalMonthlyPayment = getTotalMonthlyPayment(originalBalance, interestRate, monthsLeft); // equal amount is paid every month
 
             PaymentPlanItem[] ppiList = new PaymentPlanItem[monthsLeft]; 
             
             //loops through all months given to repay loanItem and creates a full repayment plan.
             for (int month = 0; month < monthsLeft; month++)
-            {   interestPayment = getInterestPayment(remainingBalance, interestRate);
-                principalPayment = getPrincipalPayment(totalMonthlyPayment, interestPayment);
-                
+            {   long interestPayment = getInterestPayment(remainingBalance, interestRate);
+                long principalPayment = getPrincipalPayment(totalMonthlyPayment, interestPayment);
                 //above this line is previous remainingBalance
-
                 remainingBalance = getRemainingBalance(remainingBalance, principalPayment);
-               
-                ppi = new PaymentPlanItem(month + 1, interestPayment, principalPayment, remainingBalance);
-                
+                PaymentPlanItem ppi = new PaymentPlanItem(month + 1, interestPayment, principalPayment, remainingBalance);
                 Console.WriteLine(ppi);
                 ppiList[i] = ppi;
-
             }
             
             return ppiList;
         }
         
         private long getTotalMonthlyPayment(long balance, long rate, long month){
-            return (balance * (rate / 1200)) / Mathf.Pow((1 - ( 1 + rate/ 1200)), (-1 * month))
+            return (balance * (rate / 1200)) / Mathf.Pow((1 - ( 1 + rate/ 1200)), (-1 * month));
         }
 
-        private long getInterestPayment(long balance, long rate){
-            return (balance * rate / 1200);
+        private long getInterestPayment(long remainingBalance, long rate){
+            return (remainingBalance * rate / 1200);
         }
-        private long getPrincipalPayment(long monthlyPayment, long interest){
-            return (monthlyPayment - interest);
+        private long getPrincipalPayment(long monthlyPayment, long interestPayment){
+            return (monthlyPayment - interestPayment);
         }
-        private long getRemainingBalance(long balance, long principal){
-            return (balance - principal);
+        private long getRemainingBalance(long remainingBalance, long principalPayment){
+            return (remainingBalance - principalPayment);
         }
     }
 }
