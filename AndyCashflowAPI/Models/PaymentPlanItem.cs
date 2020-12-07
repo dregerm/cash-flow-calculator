@@ -1,8 +1,10 @@
 public class PaymentPlanItem
 {
-
-    public int month { get; set; }
-    public long interestPayment { get; set; }
-    public long principalPayment { get; set; }
-    public long remainingBalance { get; set; }
+    public PaymentPlanItem(int months, long interest, long principal, long remaining)
+    {
+        public const int month = months;
+        public const long interestPayment = interest;
+        public const long principalPayment = principal;
+        public const long remainingBalance = remaining;
+    }
 }

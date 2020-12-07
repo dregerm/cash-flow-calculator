@@ -5,5 +5,4 @@ public class LoanItem
     public int MonthLeft { get; set; }
     public long Rate { get; set; }
     public PaymentPlanItem[] plan { get; set; }
-
 }
