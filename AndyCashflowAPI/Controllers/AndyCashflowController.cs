@@ -44,7 +44,6 @@ namespace AndyCashflowAPI.Controllers
             }
 
             return loanItem; // what it returns is the DTO version(compressed LoanItem)
-            // what can we do in order to provide ID and the paymentPlan when people does get?
         }
         
         // PUT: api/AndyCashflow/5
