@@ -43,7 +43,7 @@ namespace AndyCashflowAPI.Controllers
                 return NotFound();
             }
 
-            return loanItem; // what it returns is the DTO version(compressed LoanItem)
+            return loanItem; 
         }
         
         // PUT: api/AndyCashflow/5
@@ -89,11 +89,11 @@ namespace AndyCashflowAPI.Controllers
                 MonthLeft = loanItemDTO.MonthLeft,
                 Rate = loanItemDTO.Rate
             };
-            
-            loanItem.Plan = loanPaymentPlanner(loanItemDTO);
-
+                    
             _context.LoanItems.Add(loanItem);
             await _context.SaveChangesAsync();
+            
+            loanPaymentPlanner(loanItem);
             
             return CreatedAtAction(
                 nameof(GetLoanItem),
@@ -132,7 +132,7 @@ namespace AndyCashflowAPI.Controllers
         };
         
 
-       private PaymentPlanItem[] loanPaymentPlanner(LoanItemDTO loanItem)
+       private void loanPaymentPlanner(LoanItem loanItem)
         {
             /*int monthsLeft = loanItem.MonthLeft;
             Console.WriteLine("MonthLeft: " + monthsLeft);
@@ -149,18 +149,20 @@ namespace AndyCashflowAPI.Controllers
                 decimal principalPayment = getPrincipalPayment(totalMonthlyPayment, interestPayment);
                 //above this line is previous remainingBalance
                 remainingBalance = getRemainingBalance(remainingBalance, principalPayment);
-                PaymentPlanItem ppi = new PaymentPlanItem(month + 1, interestPayment, principalPayment, remainingBalance);
+                PaymentPlanItem ppi = new PaymentPlanItem(loanItem.Id, month + 1, interestPayment, principalPayment, remainingBalance);
                 Console.WriteLine(ppi);
                 ppiList[month] = ppi;
             }
             */
             PaymentPlanItem[] ppiList = new PaymentPlanItem[2];
-            ppiList[0] = new PaymentPlanItem (1, (decimal)29, (decimal)100, (decimal)200);
-            ppiList[1] = new PaymentPlanItem (2, (decimal)29, (decimal)100, (decimal)200);
+            ppiList[0] = new PaymentPlanItem(loanItem.Id, 1, (decimal)29, (decimal)100, (decimal)200);
+            ppiList[1] = new PaymentPlanItem(loanItem.Id, 2, (decimal)29, (decimal)100, (decimal)200);
+            
    //         public PaymentPlanItem(int months, decimal interest, decimal principal, decimal remaining){  
                
-
-            return ppiList;
+            _context.PaymentPlanItem.AddRange(ppiList);
+            _context.SaveChanges();
+            
         }
         
         private decimal getTotalMonthlyPayment(decimal balance, decimal rate, decimal month){

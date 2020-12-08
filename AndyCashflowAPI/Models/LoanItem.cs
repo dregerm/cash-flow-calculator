@@ -1,4 +1,4 @@
-
+using System.Collections.Generic;
 namespace AndyCashflowAPI.Models
 {
     //loan item did not have namespace before.
@@ -8,6 +8,6 @@ namespace AndyCashflowAPI.Models
         public decimal Balance { get; set; }
         public int MonthLeft { get; set; }
         public decimal Rate { get; set; }
-        public PaymentPlanItem[] Plan { get; set; }
+        //public List<PaymentPlanItem> Plan { get; set; }
     }
 }

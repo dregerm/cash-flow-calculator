@@ -10,5 +10,6 @@ namespace AndyCashflowAPI.Models
         }
 
         public DbSet<LoanItem> LoanItems { get; set; }
+        public DbSet<PaymentPlanItem> PaymentPlanItem { get; set; }
     }
 }
