@@ -1,0 +1,26 @@
+<div>
+    <h2>Add Loan: </h2>
+    <label>balance due:
+        <input [(ngModel)]="loan.balance" placeholder="ex: 50000"/>
+    </label>
+    <br><br>
+
+    <label>interest rate:
+        <input [(ngModel)]="loan.rate" placeholder="ex: 10" />
+    </label>
+    <br><br>
+
+    <label>period of loan (months):
+        <input [(ngModel)]="loan.monthLeft" placeholder="ex: 36"/>
+    </label>
+    <br><br>
+
+    <section>
+        <div><span>balance: </span>{{loan.balance}}</div>
+        <div><span>rate: </span>{{loan.rate}}</div>
+        <div><span>period: </span>{{loan.monthLeft}}</div>
+    </section>
+    <br><br><br><br><br>
+
+    <button type="button">Add Loan</button>
+</div>

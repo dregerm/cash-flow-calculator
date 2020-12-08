@@ -1,0 +1,11 @@
+    section {
+        border-color: black;
+        border-width: 3px;
+        border-style: solid;
+        padding: 6.5px;
+        float: left;
+    }
+    
+    button {
+        float: left;
+    }
