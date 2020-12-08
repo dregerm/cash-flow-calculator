@@ -3,11 +3,16 @@ namespace AndyCashflowAPI.Models
 {
     public class PaymentPlanItem
     {
-        public PaymentPlanItem(int months, long interest, long principal, long remaining){  
-            public const int month = months;
-            public const long interestPayment = interest;
-            public const long principalPayment = principal;
-            public const long remainingBalance = remaining;
+        public int month;
+        public decimal interestPayment;
+        public decimal principalPayment;
+        public decimal remainingBalance;
+
+        public PaymentPlanItem(int months, decimal interest, decimal principal, decimal remaining){  
+            month = months;
+            interestPayment = interest;
+            principalPayment = principal;
+            remainingBalance = remaining;
         }
     }
 }

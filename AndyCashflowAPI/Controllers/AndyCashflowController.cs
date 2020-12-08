@@ -22,17 +22,19 @@ namespace AndyCashflowAPI.Controllers
 
         // GET: api/AndyCashflow
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LoanItem>>> GetLoanItems()
+        public async Task<ActionResult<IEnumerable<LoanItemDTO>>> GetLoanItems()
         {
             //in here to some json format or something with all of the data
             //LoanItems is the variable with the list of loans?
-            //iterate through LoanItems. 
-            return await _context.LoanItems.ToListAsync();
+            //iterate through LoanItems.
+            return await _context.LoanItems
+                .Select(x => LoanToDTO(x))
+                .ToListAsync();
         }
-
+        
         // GET: api/AndyCashflow/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LoanItem>> GetLoanItem(long id)
+        public async Task<ActionResult<LoanItemDTO>> GetLoanItem(long id)
         {
             var loanItem = await _context.LoanItems.FindAsync(id);
 
@@ -41,14 +43,17 @@ namespace AndyCashflowAPI.Controllers
                 return NotFound();
             }
 
-            return loanItem;
+            return LoanToDTO(loanItem);
         }
+        ///
+        
+
 
         // PUT: api/AndyCashflow/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLoanItem(long id, LoanItem loanItem)
+        public async Task<IActionResult> PutLoanItem(int id, LoanItem loanItem)
         {
             if (id != loanItem.Id)
             {
@@ -80,19 +85,29 @@ namespace AndyCashflowAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<LoanItem>> PostLoanItem(LoanItem loanItem)
+        public async Task<ActionResult<LoanItemDTO>> CreateLoanItem(LoanItemDTO loanItemDTO)
         {
+            var loanItem = new LoanItem{
+                Balance = loanItemDTO.Balance,
+                MonthLeft = loanItemDTO.MonthLeft,
+                Rate = loanItemDTO.Rate
+            };
             
-            loanItem.plan = loanPaymentPlanner(loanItem);
+            loanItem.Plan = loanPaymentPlanner(loanItemDTO);
+
             _context.LoanItems.Add(loanItem);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetLoanItem", new { id = loanItem.Id }, loanItem);
+            
+            return CreatedAtAction(
+                nameof(GetLoanItem),
+                new { id = loanItem.Id },
+                LoanToDTO(loanItem));
+ 
         }
 
         // DELETE: api/AndyCashflow/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<LoanItem>> DeleteLoanItem(long id)
+        public async Task<ActionResult<LoanItem>> DeleteLoanItem(int id)
         {
             var loanItem = await _context.LoanItems.FindAsync(id);
             if (loanItem == null)
@@ -106,47 +121,60 @@ namespace AndyCashflowAPI.Controllers
             return loanItem;
         }
 
-        private bool LoanItemExists(long id)
+        private bool LoanItemExists(int id)
         {
             return _context.LoanItems.Any(e => e.Id == id);
         }
-
-       private PaymentPlanItem[] loanPaymentPlanner(LoanItem loanItem)
+        
+        private static LoanItemDTO LoanToDTO(LoanItem LoanItem) => new LoanItemDTO
         {
-            const long monthsLeft = loanItem.MonthLeft;
+            Balance = LoanItem.Balance,
+            MonthLeft = LoanItem.MonthLeft,
+            Rate = LoanItem.Rate
+        };
+        
+       private PaymentPlanItem[] loanPaymentPlanner(LoanItemDTO loanItem)
+        {
+            /*int monthsLeft = loanItem.MonthLeft;
             Console.WriteLine("MonthLeft: " + monthsLeft);
-            const long interestRate = loanItem.Rate;
-            const long originalBalance = loanItem.Balance;
-            long remainingBalance = originalBalance; 
-            const long totalMonthlyPayment = getTotalMonthlyPayment(originalBalance, interestRate, monthsLeft); // equal amount is paid every month
+            decimal interestRate = loanItem.Rate;
+            decimal originalBalance = loanItem.Balance;
+            decimal remainingBalance = originalBalance; 
+            decimal totalMonthlyPayment = getTotalMonthlyPayment(originalBalance, interestRate, monthsLeft); // equal amount is paid every month
 
             PaymentPlanItem[] ppiList = new PaymentPlanItem[monthsLeft]; 
             
             //loops through all months given to repay loanItem and creates a full repayment plan.
             for (int month = 0; month < monthsLeft; month++)
-            {   long interestPayment = getInterestPayment(remainingBalance, interestRate);
-                long principalPayment = getPrincipalPayment(totalMonthlyPayment, interestPayment);
+            {   decimal interestPayment = getInterestPayment(remainingBalance, interestRate);
+                decimal principalPayment = getPrincipalPayment(totalMonthlyPayment, interestPayment);
                 //above this line is previous remainingBalance
                 remainingBalance = getRemainingBalance(remainingBalance, principalPayment);
                 PaymentPlanItem ppi = new PaymentPlanItem(month + 1, interestPayment, principalPayment, remainingBalance);
                 Console.WriteLine(ppi);
-                ppiList[i] = ppi;
+                ppiList[month] = ppi;
             }
-            
+            */
+            PaymentPlanItem[] ppiList = new PaymentPlanItem[2];
+            ppiList[0] = new PaymentPlanItem (1, (decimal)29, (decimal)100, (decimal)200);
+            ppiList[1] = new PaymentPlanItem (2, (decimal)29, (decimal)100, (decimal)200);
+   //         public PaymentPlanItem(int months, decimal interest, decimal principal, decimal remaining){  
+               
+
             return ppiList;
         }
         
-        private long getTotalMonthlyPayment(long balance, long rate, long month){
-            return (balance * (rate / 1200)) / Mathf.Pow((1 - ( 1 + rate/ 1200)), (-1 * month));
+        private decimal getTotalMonthlyPayment(decimal balance, decimal rate, decimal month){
+            return (balance * (rate / 1200)) / (decimal)Math.Pow((1 - ( 1 + (double)rate/ 1200)), (-1 * (double)month));
         }
 
-        private long getInterestPayment(long remainingBalance, long rate){
+        private decimal getInterestPayment(decimal remainingBalance, decimal rate){
             return (remainingBalance * rate / 1200);
         }
-        private long getPrincipalPayment(long monthlyPayment, long interestPayment){
+        private decimal getPrincipalPayment(decimal monthlyPayment, decimal interestPayment){
             return (monthlyPayment - interestPayment);
         }
-        private long getRemainingBalance(long remainingBalance, long principalPayment){
+        private decimal getRemainingBalance(decimal remainingBalance, decimal principalPayment){
             return (remainingBalance - principalPayment);
         }
     }
