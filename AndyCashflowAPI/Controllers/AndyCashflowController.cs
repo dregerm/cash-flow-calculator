@@ -34,7 +34,7 @@ namespace AndyCashflowAPI.Controllers
         
         // GET: api/AndyCashflow/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LoanItemDTO>> GetLoanItem(long id)
+        public async Task<ActionResult<LoanItem>> GetLoanItem(long id)
         {
             var loanItem = await _context.LoanItems.FindAsync(id);
 
@@ -43,12 +43,10 @@ namespace AndyCashflowAPI.Controllers
                 return NotFound();
             }
 
-            return LoanToDTO(loanItem);
+            return loanItem; // what it returns is the DTO version(compressed LoanItem)
+            // what can we do in order to provide ID and the paymentPlan when people does get?
         }
-        ///
         
-
-
         // PUT: api/AndyCashflow/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -126,13 +124,15 @@ namespace AndyCashflowAPI.Controllers
             return _context.LoanItems.Any(e => e.Id == id);
         }
         
-        private static LoanItemDTO LoanToDTO(LoanItem LoanItem) => new LoanItemDTO
-        {
-            Balance = LoanItem.Balance,
-            MonthLeft = LoanItem.MonthLeft,
-            Rate = LoanItem.Rate
+        
+        //bata is wondering what the person of having a static method
+        private static LoanItemDTO LoanToDTO(LoanItem LoanItem) => 
+        new LoanItemDTO{Balance = LoanItem.Balance, 
+                        MonthLeft = LoanItem.MonthLeft,
+                        Rate = LoanItem.Rate
         };
         
+
        private PaymentPlanItem[] loanPaymentPlanner(LoanItemDTO loanItem)
         {
             /*int monthsLeft = loanItem.MonthLeft;
