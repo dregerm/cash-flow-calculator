@@ -22,14 +22,17 @@ namespace AndyCashflowAPI.Controllers
 
         // GET: api/AndyCashflow
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LoanItemDTO>>> GetLoanItems()
+        public async Task<ActionResult<IEnumerable<PaymentPlanItem>>> GetPaymentPlanItems()
         {
             //in here to some json format or something with all of the data
             //LoanItems is the variable with the list of loans?
             //iterate through LoanItems.
-            return await _context.LoanItems
-                .Select(x => LoanToDTO(x))
+            return await _context.PaymentPlanItems
+                //.Select(x => LoanToDTO(x)) //DO WE WANT T0 PROVIDE USERS WITH LOAN OR LOANDTO? WE COULD HAVE //.Select(x => x)
                 .ToListAsync();
+            
+            //return new PaymentPlanComposite();
+            
         }
         
         // GET: api/AndyCashflow/5
@@ -134,14 +137,14 @@ namespace AndyCashflowAPI.Controllers
 
        private void loanPaymentPlanner(LoanItem loanItem)
         {
-            /*int monthsLeft = loanItem.MonthLeft;
+            int monthsLeft = loanItem.MonthLeft;
             Console.WriteLine("MonthLeft: " + monthsLeft);
             decimal interestRate = loanItem.Rate;
             decimal originalBalance = loanItem.Balance;
             decimal remainingBalance = originalBalance; 
             decimal totalMonthlyPayment = getTotalMonthlyPayment(originalBalance, interestRate, monthsLeft); // equal amount is paid every month
 
-            PaymentPlanItem[] ppiList = new PaymentPlanItem[monthsLeft]; 
+            List<PaymentPlanItem> ppiList = new List<PaymentPlanItem>(); 
             
             //loops through all months given to repay loanItem and creates a full repayment plan.
             for (int month = 0; month < monthsLeft; month++)
@@ -151,24 +154,22 @@ namespace AndyCashflowAPI.Controllers
                 remainingBalance = getRemainingBalance(remainingBalance, principalPayment);
                 PaymentPlanItem ppi = new PaymentPlanItem(loanItem.Id, month + 1, interestPayment, principalPayment, remainingBalance);
                 Console.WriteLine(ppi);
-                ppiList[month] = ppi;
+                ppiList.Add(ppi);
             }
-            */
-            PaymentPlanItem[] ppiList = new PaymentPlanItem[2];
-            ppiList[0] = new PaymentPlanItem(loanItem.Id, 1, (decimal)29, (decimal)100, (decimal)200);
-            ppiList[1] = new PaymentPlanItem(loanItem.Id, 2, (decimal)29, (decimal)100, (decimal)200);
-            
-   //         public PaymentPlanItem(int months, decimal interest, decimal principal, decimal remaining){  
                
-            _context.PaymentPlanItem.AddRange(ppiList);
+            _context.PaymentPlanItems.AddRange(ppiList);
             _context.SaveChanges();
             
         }
         
         private decimal getTotalMonthlyPayment(decimal balance, decimal rate, decimal month){
-            return (balance * (rate / 1200)) / (decimal)Math.Pow((1 - ( 1 + (double)rate/ 1200)), (-1 * (double)month));
+            decimal a = (balance * (rate/1200));
+            decimal c = (1 + rate/1200);
+            decimal d = -1 * month;
+            decimal b = 1 - (decimal)Math.Pow((double)c, (double)d);
+            Console.WriteLine("TotalMonthlyPayment: " + (a/b));
+            return (a / b);
         }
-
         private decimal getInterestPayment(decimal remainingBalance, decimal rate){
             return (remainingBalance * rate / 1200);
         }
@@ -178,5 +179,7 @@ namespace AndyCashflowAPI.Controllers
         private decimal getRemainingBalance(decimal remainingBalance, decimal principalPayment){
             return (remainingBalance - principalPayment);
         }
+
+       
     }
 }
