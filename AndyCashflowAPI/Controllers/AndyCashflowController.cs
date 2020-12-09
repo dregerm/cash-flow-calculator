@@ -24,13 +24,13 @@ namespace AndyCashflowAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentPlanItem>>> GetPaymentPlanItems()
         {
-            //in here to some json format or something with all of the data
-            //LoanItems is the variable with the list of loans?
-            //iterate through LoanItems.
+            List<PaymentPlanItem> ppi = new List<PaymentPlanItem>();
+            this.ppi = await context.PaymentPlanItems.Select(x => x.LoanId == this.loanItem.Id).ToListAsync();
+            PaymentPlanComposite ppc = new PaymentPlanComposite();
             return await _context.PaymentPlanItems
                 //.Select(x => LoanToDTO(x)) //DO WE WANT T0 PROVIDE USERS WITH LOAN OR LOANDTO? WE COULD HAVE //.Select(x => x)
                 .ToListAsync();
-            
+            .
             //return new PaymentPlanComposite();
             
         }

@@ -12,7 +12,7 @@ namespace AndyCashflowAPI.Models
         public PaymentPlanComposite(){}
         public PaymentPlanComposite(LoanItem loanItem){
             this.loanItem = loanItem;
-            //this.ppi = context.PaymentPlanItems.Select( x => x.LoanId == this.loanItem.Id).ToListAsync(); // the way we are selecting might be wrong
+            //this.ppi = context.PaymentPlanItems.Select(x => x.LoanId == this.loanItem.Id).ToListAsync(); // the way we are selecting might be wrong
         }
         
     }

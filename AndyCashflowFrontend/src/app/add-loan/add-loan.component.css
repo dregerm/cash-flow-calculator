@@ -1,10 +1,19 @@
     section {
+        width: 90%;
+        margin: 5%;
         border-color: black;
         border-width: 3px;
         border-style: solid;
         padding: 6.5px;
         float: left;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: space-around;
+        flex-flow: row wrap;
+        
     }
+
     
     button {
         float: left;
