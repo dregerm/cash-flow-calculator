@@ -9,10 +9,11 @@ namespace AndyCashflowAPI.Models
     {
         public LoanItem loanItem;
         public List<PaymentPlanItem> ppi = new List<PaymentPlanItem>();
+        
         public PaymentPlanComposite(){}
-        public PaymentPlanComposite(LoanItem loanItem){
+        public PaymentPlanComposite(LoanItem loanItem, List<PaymentPlanComposite> plan){
             this.loanItem = loanItem;
-            //this.ppi = context.PaymentPlanItems.Select(x => x.LoanId == this.loanItem.Id).ToListAsync(); // the way we are selecting might be wrong
+            this.ppi = plan;
         }
         
     }

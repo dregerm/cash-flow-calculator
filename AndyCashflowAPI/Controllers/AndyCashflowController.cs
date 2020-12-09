@@ -25,12 +25,19 @@ namespace AndyCashflowAPI.Controllers
         public async Task<ActionResult<IEnumerable<PaymentPlanItem>>> GetPaymentPlanItems()
         {
             List<PaymentPlanItem> ppi = new List<PaymentPlanItem>();
-            this.ppi = await context.PaymentPlanItems.Select(x => x.LoanId == this.loanItem.Id).ToListAsync();
-            PaymentPlanComposite ppc = new PaymentPlanComposite();
+            List<LoanItem> loanList = await _context.LoanItems.ToListAsync():
+            List<PaymentPlanComposite> compList =  new List<PaymentPlanComposite>();
+            for(int a = 0; a < loanList.length; a++){
+                Loan_i = loanList[a];
+                ppi_selected = await context.PaymentPlanItems.Select(x => x.LoanId == loanList[a].Id).ToListAsync();
+                PaymentPlanComposite ppc = new PaymentPlanComposite(loanList[a], ppi_selected);
+                compList.Add(ppc);
+            }
+            
             return await _context.PaymentPlanItems
                 //.Select(x => LoanToDTO(x)) //DO WE WANT T0 PROVIDE USERS WITH LOAN OR LOANDTO? WE COULD HAVE //.Select(x => x)
                 .ToListAsync();
-            .
+            
             //return new PaymentPlanComposite();
             
         }
