@@ -11,7 +11,7 @@ namespace AndyCashflowAPI.Models
         public List<PaymentPlanItem> ppi = new List<PaymentPlanItem>();
         
         public PaymentPlanComposite(){}
-        public PaymentPlanComposite(LoanItem loanItem, List<PaymentPlanComposite> plan){
+        public PaymentPlanComposite(LoanItem loanItem, List<PaymentPlanItem> plan){
             this.loanItem = loanItem;
             this.ppi = plan;
         }
