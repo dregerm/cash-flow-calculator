@@ -1,20 +1,36 @@
     section {
         width: 90%;
-        margin: 5%;
+        margin-left: 5%;
+        margin-right: 5%;
         border-color: black;
         border-width: 3px;
         border-style: solid;
-        padding: 6.5px;
+        padding: 10px;
         float: left;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         align-content: space-around;
         flex-flow: row wrap;
-        
     }
-
+    
+    #center {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
     
     button {
-        float: left;
+        height: 50px;
+        border: none;
+        background-color: black;
+        color: white;
+    }
+    
+    button:focus {
+        text-decoration: none;
+        outline: none;
+        background-color: red;
     }

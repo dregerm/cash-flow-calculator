@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LOANS } from '../mock-loans';
+import { PaymentPlanService } from '../payment-plan.service';
+import { LoanPlan } from '../loan-plan';
+
 
 @Component({
   selector: 'app-display-loan-plans',
@@ -8,10 +10,14 @@ import { LOANS } from '../mock-loans';
 })
 export class DisplayLoanPlansComponent implements OnInit {
 
-  loans = LOANS;
-  constructor() { }
+  loans: LoanPlan[];
+  constructor(private paymentPlanService: PaymentPlanService) { }
 
   ngOnInit(): void {
+    this.getPaymentPlan();
   }
-
+  
+  getPaymentPlan(): void {
+    this.paymentPlanService.getLoanPlan().subscribe(loans => this.loans = loans);
+  }
 }

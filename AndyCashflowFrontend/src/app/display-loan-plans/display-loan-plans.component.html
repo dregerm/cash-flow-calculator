@@ -1,1 +1,7 @@
-<p>display-loan-plans works!</p>
+<div *ngIf="loans">
+    <br /><br /><br />
+    <ul>
+        <li *ngFor="let loan of loans">month: {{loan.month}} interest: {{loan.interestpayment}} principal: {{loan.principalpayment}} balanceRemaining: {{loan.remainingbalance}}</li>
+    </ul>
+    <app-display-aggregate-cash-flow></app-display-aggregate-cash-flow>
+</div>

@@ -15,12 +15,12 @@
     </label>
     <br><br>
 
-    <section>
-        <div><span>balance: </span>{{loan.balance}}</div>
-        <div><span>rate: </span>{{loan.rate}}</div>
-        <div><span>period: </span>{{loan.monthLeft}}</div>
-    </section>
-    <br><br><br><br><br>
-
-    <button type="button">Add Loan</button>
+    <div id="center">
+        <section>
+            <div><span>balance: </span>{{loan.balance}}</div>
+            <div><span> rate: </span>{{loan.rate}}</div>
+            <div><span> period: </span>{{loan.monthLeft}}</div>
+        </section>
+        <button type="button" (click)="addLoan()">Add Loan</button>
+    </div>
 </div>

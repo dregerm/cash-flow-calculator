@@ -1,0 +1,6 @@
+li {
+    list-style: none;
+    margin-bottom: 5px;
+    display: flex;
+    direction: row;
+}

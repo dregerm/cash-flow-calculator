@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Loan } from '../loan';
+import { Loan } from '../loan';
+import { PaymentPlanService } from '../payment-plan.service';
+
 
 @Component({
   selector: 'app-add-loan',
@@ -13,9 +15,15 @@ export class AddLoanComponent implements OnInit {
     monthLeft: 1000,
     rate: 2.5
   }
-  constructor() { }
+  constructor(private paymentPlanService: PaymentPlanService) { }
 
   ngOnInit(): void {
   }
+
+  addLoan(): void {
+    this.paymentPlanService.postLoanPlan(this.loan);
+  }
+
+
 
 }
