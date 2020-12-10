@@ -1,10 +1,8 @@
 export interface LoanPlan {
     id : number;
-    loanID: number;
+    loanId: number;
     month: number;
-    interestpayment: number;
-    principalpayment: number;
-    remainingbalance: number;
-
-  
+    interestPayment: number;
+    principalPayment: number;
+    remainingBalance: number;
   }

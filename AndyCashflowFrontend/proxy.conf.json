@@ -1,0 +1,26 @@
+{
+    "/post" : {
+        "target": "https://localhost:5001/api/AndyCashflow/",
+        "secure": false,
+        "changeOrigin": false,
+        "pathRewrite": {
+            "^/post": ""
+        }
+    },
+    "/getli" : {
+        "target": "https://localhost:5001/api/AndyCashflow/li",
+        "secure": false,
+        "changeOrigin": false,
+        "pathRewrite": {
+            "^/getli": ""
+        }
+    },
+    "/getppi" : {
+        "target": "https://localhost:5001/api/AndyCashflow/ppi",
+        "secure": false,
+        "changeOrigin": false,
+        "pathRewrite": {
+            "^/getppi": ""
+        }
+    }
+}

@@ -9,9 +9,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PaymentPlanService {
 
-  private ppiUrl = 'api/AndyCashflow/ppi';  // URL to GET ppi method in web api
-  private liUrl = 'api/AndyCashflow/li'; //
-  private baseUrl = 'localhost:5001/';
+  private ppiUrl = '/getppi';  // URL to GET ppi method in web api
+  private liUrl = '/getli'; //
+  private baseUrl = 'http://localhost:4200';
 
   constructor(private http: HttpClient) { }
 
@@ -20,10 +20,10 @@ export class PaymentPlanService {
 
     return this.http.get<LoanPlan[]>(this.baseUrl + this.ppiUrl);
   }
-
-  postLoanPlan(loanItem: Loan): Observable<any>{
-    return this.http.post(this.baseUrl, loanItem);
-    
+  //Observable<Loan>
+  postLoanPlan(loanItem: Loan): void{
+    console.log("posting" + JSON.stringify(loanItem));
+    this.http.post<Loan>(this.baseUrl + '/post', loanItem).subscribe(x => console.log("received: " + JSON.stringify(x)));
   }
 }
 
