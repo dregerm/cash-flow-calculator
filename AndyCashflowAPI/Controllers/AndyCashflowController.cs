@@ -20,29 +20,50 @@ namespace AndyCashflowAPI.Controllers
             _context = context;
         }
 
-        // GET: api/AndyCashflow
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<List<PaymentPlanComposite>>>> GetPaymentPlanItems()
+        // GET: api/AndyCashflow/ppi
+        [HttpGet("ppi")]
+        public async Task<ActionResult<IEnumerable<PaymentPlanItem>>> GetPaymentPlanItems()
         {
+            return await _context.PaymentPlanItems.ToListAsync();
+            /*
             List<PaymentPlanItem> ppi_selected = new List<PaymentPlanItem>();
             List<LoanItem> loanList = await _context.LoanItems.ToListAsync();
             List<PaymentPlanComposite> compList =  new List<PaymentPlanComposite>();
             
+            //bata playing around 
+
+            
+            
+            Console.WriteLine("LOAN LIST:" + loanList);
+            Console.WriteLine("LOOP STARTS HERE");
             for(int a = 0; a < loanList.Count; a++){
-                ppi_selected = await _context.PaymentPlanItems.Select(x => x.LoanId == loanList[a].Id).ToListAsync();
+                ppi_selected = await _context.PaymentPlanItems.Where(x => x.LoanId == loanList[a].Id).ToListAsync();
+                Console.WriteLine("ppi_selected: " + ppi_selected);
+                Console.WriteLine("A: " + ppi_selected[0]);
+                Console.WriteLine("B: " + ppi_selected[1]);
                 PaymentPlanComposite ppc = new PaymentPlanComposite(loanList[a], ppi_selected);
+                Console.WriteLine("payment plan composite: " + ppc);
+                Console.WriteLine("C: " + ppc.loanItem);
+                Console.WriteLine("D: " + ppc.ppi[0]);
+                Console.WriteLine("E: " + ppc.ppi[1]);
                 compList.Add(ppc);
             }
             
+            Console.WriteLine("LOOP FINISHED");
+            Console.WriteLine("F: " + compList[0].ppi[0]);
+            Console.WriteLine("G: " + compList[0].ppi[1]);
             return compList;
-            //return await _context.PaymentPlanItems
-                //.Select(x => LoanToDTO(x)) //DO WE WANT T0 PROVIDE USERS WITH LOAN OR LOANDTO? WE COULD HAVE //.Select(x => x)
-                //.ToListAsync();
-            
-            //return new PaymentPlanComposite();
+            */
             
         }
-        
+
+        // GET: api/AndyCashflow/li
+        [HttpGet("li")]
+        public async Task<ActionResult<IEnumerable<LoanItem>>> GetLoanItems()
+        {
+            return await _context.LoanItems.ToListAsync();
+        }
+
         // GET: api/AndyCashflow/5
         [HttpGet("{id}")]
         public async Task<ActionResult<LoanItem>> GetLoanItem(long id)
@@ -146,7 +167,7 @@ namespace AndyCashflowAPI.Controllers
        private void loanPaymentPlanner(LoanItem loanItem)
         {
             int monthsLeft = loanItem.MonthLeft;
-            Console.WriteLine("MonthLeft: " + monthsLeft);
+            
             decimal interestRate = loanItem.Rate;
             decimal originalBalance = loanItem.Balance;
             decimal remainingBalance = originalBalance; 
@@ -161,7 +182,7 @@ namespace AndyCashflowAPI.Controllers
                 //above this line is previous remainingBalance
                 remainingBalance = getRemainingBalance(remainingBalance, principalPayment);
                 PaymentPlanItem ppi = new PaymentPlanItem(loanItem.Id, month + 1, interestPayment, principalPayment, remainingBalance);
-                Console.WriteLine(ppi);
+                
                 ppiList.Add(ppi);
             }
                
@@ -175,7 +196,6 @@ namespace AndyCashflowAPI.Controllers
             decimal c = (1 + rate/1200);
             decimal d = -1 * month;
             decimal b = 1 - (decimal)Math.Pow((double)c, (double)d);
-            Console.WriteLine("TotalMonthlyPayment: " + (a/b));
             return (a / b);
         }
         private decimal getInterestPayment(decimal remainingBalance, decimal rate){
