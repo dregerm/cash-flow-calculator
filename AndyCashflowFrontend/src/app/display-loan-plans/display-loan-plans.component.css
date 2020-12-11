@@ -4,3 +4,12 @@ li {
     display: flex;
     direction: row;
 }
+
+li>h3 {
+    display: inline;
+}
+
+#loan {
+    margin-bottom: 20px;
+    background-color: lightblue;
+}

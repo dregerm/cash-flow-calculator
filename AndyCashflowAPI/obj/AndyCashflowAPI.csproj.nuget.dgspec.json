@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/michaeldreger/Desktop/externship/cash-flow-calculator/AndyCashflowAPI/AndyCashflowAPI.csproj": {}
+    "C:\\Users\\etien\\Documents\\Projects\\cash-flow-calculator\\AndyCashflowAPI\\AndyCashflowAPI.csproj": {}
   },
   "projects": {
-    "/Users/michaeldreger/Desktop/externship/cash-flow-calculator/AndyCashflowAPI/AndyCashflowAPI.csproj": {
+    "C:\\Users\\etien\\Documents\\Projects\\cash-flow-calculator\\AndyCashflowAPI\\AndyCashflowAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/michaeldreger/Desktop/externship/cash-flow-calculator/AndyCashflowAPI/AndyCashflowAPI.csproj",
+        "projectUniqueName": "C:\\Users\\etien\\Documents\\Projects\\cash-flow-calculator\\AndyCashflowAPI\\AndyCashflowAPI.csproj",
         "projectName": "AndyCashflowAPI",
-        "projectPath": "/Users/michaeldreger/Desktop/externship/cash-flow-calculator/AndyCashflowAPI/AndyCashflowAPI.csproj",
-        "packagesPath": "/Users/michaeldreger/.nuget/packages/",
-        "outputPath": "/Users/michaeldreger/Desktop/externship/cash-flow-calculator/AndyCashflowAPI/obj/",
+        "projectPath": "C:\\Users\\etien\\Documents\\Projects\\cash-flow-calculator\\AndyCashflowAPI\\AndyCashflowAPI.csproj",
+        "packagesPath": "C:\\Users\\etien\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\etien\\Documents\\Projects\\cash-flow-calculator\\AndyCashflowAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/michaeldreger/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\etien\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -73,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.404/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

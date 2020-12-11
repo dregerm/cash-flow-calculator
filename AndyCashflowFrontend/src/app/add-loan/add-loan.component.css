@@ -29,8 +29,13 @@
         color: white;
     }
     
-    button:focus {
+    button:active {
         text-decoration: none;
         outline: none;
         background-color: red;
+    }
+    
+    button:focus {
+        text-decoration: none;
+        outline: none;
     }

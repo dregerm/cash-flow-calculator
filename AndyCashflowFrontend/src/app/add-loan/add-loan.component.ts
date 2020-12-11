@@ -12,7 +12,7 @@ export class AddLoanComponent implements OnInit {
 
   loan: Loan = {
     balance: 100,
-    monthLeft: 1000,
+    monthLeft: 5,
     rate: 2.5
   }
   constructor(private paymentPlanService: PaymentPlanService) { }
