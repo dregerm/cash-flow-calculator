@@ -24,7 +24,7 @@ namespace AndyCashflowAPI.Controllers
         [HttpGet("ppi")]
         public async Task<ActionResult<IEnumerable<PaymentPlanItem>>> GetPaymentPlanItems()
         {
-            Console.WriteLine("Get ppi");
+            //Console.WriteLine("Get ppi");
             return await _context.PaymentPlanItems.ToListAsync();
             /*
             List<PaymentPlanItem> ppi_selected = new List<PaymentPlanItem>();
@@ -62,7 +62,7 @@ namespace AndyCashflowAPI.Controllers
         [HttpGet("li")]
         public async Task<ActionResult<IEnumerable<LoanItem>>> GetLoanItems()
         {
-            Console.WriteLine("Get li");
+            //Console.WriteLine("Get li");
             return await _context.LoanItems.ToListAsync();
         }
 
@@ -118,7 +118,7 @@ namespace AndyCashflowAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<LoanItemDTO>> CreateLoanItem(LoanItemDTO loanItemDTO)
         {
-            Console.WriteLine("POST new loan item");
+            //Console.WriteLine("POST new loan item");
             var loanItem = new LoanItem{
                 Balance = loanItemDTO.Balance,
                 MonthLeft = loanItemDTO.MonthLeft,
@@ -210,7 +210,5 @@ namespace AndyCashflowAPI.Controllers
         private decimal getRemainingBalance(decimal remainingBalance, decimal principalPayment){
             return (remainingBalance - principalPayment);
         }
-
-       
     }
 }

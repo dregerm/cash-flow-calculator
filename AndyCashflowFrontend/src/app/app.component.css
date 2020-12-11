@@ -1,0 +1,88 @@
+section {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-color: black;
+    border-width: 3px;
+    border-style: solid;
+    padding: 10px;
+    float: left;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: space-around;
+    flex-flow: row wrap;
+}
+
+#center {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+button {
+    height: 50px;
+    border: none;
+    background-color: black;
+    color: white;
+}
+
+button:active {
+    text-decoration: none;
+    outline: none;
+    background-color: red;
+}
+
+button:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+li {
+    list-style: none;
+    margin-bottom: 5px;
+    display: flex;
+    direction: row;
+}
+
+li>h3 {
+    display: inline;
+}
+
+.loan {
+    margin-bottom: 20px;
+    background-color: lightblue;
+}
+
+h2 {
+    width: 100%;
+}
+
+p {
+    margin-right: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.flex {
+    display: flexbox;
+    flex-direction: column;
+    align-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.flex>div {
+    width: 50%;
+    float: left;
+}
+
+#left {
+    float: left;
+}
+
+.floatright {
+    float: right;
+}

@@ -16,19 +16,15 @@ export class PaymentPlanService {
   constructor(private http: HttpClient) { }
 
   getLoanPlan(): Observable<LoanPlan[]> {
-    //return of(LOANS);
-
     return this.http.get<LoanPlan[]>(this.baseUrl + this.ppiUrl);
   }
 
   getLoanIds(): Observable<Loan[]> {
     return this.http.get<Loan[]>(this.baseUrl + this.liUrl);
   }
-  //Observable<Loan>
   
-  postLoanPlan(loanItem: Loan): void{
-    console.log("posting" + JSON.stringify(loanItem));
-    this.http.post<Loan>(this.baseUrl + '/post', loanItem).subscribe(x => console.log("received: " + JSON.stringify(x)));
+  postLoanPlan(loanItem: Loan): Observable<Loan>{
+    return this.http.post<Loan>(this.baseUrl + '/post', loanItem);
   }
 }
 
